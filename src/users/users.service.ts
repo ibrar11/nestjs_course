@@ -1,9 +1,10 @@
 
 export type UserType = {
     id: number
-    name: string,
-    age: number,
-    gender: string,
+    name: string
+    age: number
+    gender?: string
+    email: string
     isMarried: boolean
 }
 
@@ -14,6 +15,7 @@ export class UsersService{
             name: 'John',
             gender: 'Male',
             age: 28,
+            email: 'john@mail.com',
             isMarried: false
         },
         {
@@ -21,6 +23,15 @@ export class UsersService{
             name: 'mark',
             gender: 'Male',
             age: 24,
+            email: 'mark@mail.com',
+            isMarried: true
+        },
+        {
+            id: 3,
+            name: 'jean',
+            gender: 'Female',
+            age: 24,
+            email: 'jean@mail.com',
             isMarried: true
         },
     ]
