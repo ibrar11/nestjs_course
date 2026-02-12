@@ -1,15 +1,20 @@
-import { Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post } from "@nestjs/common";
+import { UsersService } from "./users.service";
+import type { UserType } from "./users.service";
 
 @Controller('users')
 export class UserController {
 
     @Get()
     getUsers() {
-        return "you made request to get all users"
+        const usersService = new UsersService();
+        return usersService.getAllUsers();
     }
 
     @Post()
-    createUser() {
-        return 'a new user has been created:'
+    createUser(@Body() body:{user: UserType}) {
+        const usersService = new UsersService();
+        usersService.createUser(body.user)
+        return 'a new user has been created';
     }
 }
