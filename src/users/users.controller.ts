@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query } from "@nestjs/common";
+import { Body, Controller, DefaultValuePipe, Get, Param, ParseIntPipe, Post, Query } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import type { UserType } from "./users.service";
 
@@ -6,18 +6,22 @@ import type { UserType } from "./users.service";
 export class UserController {
 
     @Get()
-    getUsers(@Query() query: any) {
+    getUsers(
+        @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limi: number, 
+        @Query('page', new DefaultValuePipe(1), ParseIntPipe) page:number, 
+        @Query('gender') gender:string
+    ) {
         const usersService = new UsersService();
-        if(query?.gender) {
-            return usersService.getAllUsers().filter(user => user.gender === query.gender)
+        if(gender) {
+            return usersService.getAllUsers().filter(user => user.gender === gender)
         }
         return usersService.getAllUsers();
     }
 
     @Get(':id')
-    getUserById(@Param('id') id:string) {
+    getUserById(@Param('id', ParseIntPipe) id:number) {
         const usersService = new UsersService();
-        return usersService.getUserById(+id)
+        return usersService.getUserById(id)
     }
 
     @Post()
