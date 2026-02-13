@@ -1,9 +1,13 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { TweetService } from './tweet.service';
 
-@Controller('tweet')
+@Controller('tweet/')
 export class TweetController {
     constructor(private tweetService: TweetService) {
-        
+    }
+
+    @Get(':userId')
+    public GetTweets(@Param('userId', ParseIntPipe) userId: number){
+        return this.tweetService.getTweets(userId)
     }
 }
