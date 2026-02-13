@@ -7,6 +7,7 @@ export type UserType = {
     gender?: string
     email: string
     isMarried: boolean
+    password: string
 }
 
 @Injectable()
@@ -18,7 +19,8 @@ export class UsersService{
             gender: 'Male',
             age: 28,
             email: 'john@mail.com',
-            isMarried: false
+            isMarried: false,
+            password: '123454'
         },
         {
             id: 2,
@@ -26,7 +28,8 @@ export class UsersService{
             gender: 'Male',
             age: 24,
             email: 'mark@mail.com',
-            isMarried: true
+            isMarried: true,
+            password: '12345'
         },
         {
             id: 3,
@@ -34,7 +37,8 @@ export class UsersService{
             gender: 'Female',
             age: 24,
             email: 'jean@mail.com',
-            isMarried: true
+            isMarried: true,
+            password: '12345334'
         },
     ]
 
