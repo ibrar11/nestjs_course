@@ -5,6 +5,7 @@ import { GetUserParamDto } from "./dto/get-user-param.dto";
 
 @Controller('users')
 export class UserController {
+    constructor(private usersService: UsersService){}
 
     @Get('')
     getUsers(
@@ -14,11 +15,10 @@ export class UserController {
         @Param() params: GetUserParamDto
     ) {
         console.log("paramsparams",params)
-        const usersService = new UsersService();
         if(gender) {
-            return usersService.getAllUsers().filter(user => user.gender === gender)
+            return this.usersService.getAllUsers().filter(user => user.gender === gender)
         }
-        return usersService.getAllUsers();
+        return this.usersService.getAllUsers();
     }
 
     @Get(':isMarried')
@@ -26,20 +26,17 @@ export class UserController {
         @Param() params: GetUserParamDto
     ) {
         console.log("paramsparams",params)
-        const usersService = new UsersService();
-        return usersService.getAllUsers();
+        return this.usersService.getAllUsers();
     }
 
     @Get(':id')
     getUserById(@Param('id', ParseIntPipe) id:number) {
-        const usersService = new UsersService();
-        return usersService.getUserById(id)
+        return this.usersService.getUserById(id)
     }
 
     @Post()
     createUser(@Body() user: CreateUserDto) {
-        // const usersService = new UsersService();
-        // usersService.createUser(body.user)
+        // this.usersService.createUser(body.user)
         return 'a new user has been created';
     }
 }

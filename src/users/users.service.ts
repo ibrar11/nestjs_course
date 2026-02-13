@@ -1,3 +1,4 @@
+import { Injectable } from "@nestjs/common"
 
 export type UserType = {
     id: number
@@ -8,6 +9,7 @@ export type UserType = {
     isMarried: boolean
 }
 
+@Injectable()
 export class UsersService{
     users: UserType[] = [
         {
