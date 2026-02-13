@@ -1,11 +1,15 @@
-import { Body, Controller, DefaultValuePipe, Get, Param, ParseIntPipe, Post, Query } from "@nestjs/common";
+import { Body, Controller, DefaultValuePipe, forwardRef, Get, Inject, Param, ParseIntPipe, Post, Query } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { GetUserParamDto } from "./dto/get-user-param.dto";
+import { AuthService } from "src/auth/auth.service";
 
 @Controller('users')
 export class UserController {
-    constructor(private usersService: UsersService){}
+    constructor(
+        private usersService: UsersService,
+        @Inject(forwardRef(() => AuthService)) private readonly authService: AuthService
+    ){}
 
     @Get('')
     getUsers(
@@ -14,11 +18,13 @@ export class UserController {
         @Query('gender') gender:string,
         @Param() params: GetUserParamDto
     ) {
-        console.log("paramsparams",params)
         if(gender) {
             return this.usersService.getAllUsers().filter(user => user.gender === gender)
         }
-        return this.usersService.getAllUsers();
+        if(this.authService.isAuthenticated){
+            return this.usersService.getAllUsers();
+        }
+        return 'User not authenticated'
     }
 
     @Get(':isMarried')
